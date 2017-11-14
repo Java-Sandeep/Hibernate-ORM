@@ -10,41 +10,34 @@ import bean.Car;
 public class Test {
 	public static void main(String[] args) {
 		
-		// object state is transient
-		System.out.println("transient object state");
-		System.out.println("Bean class object creating");
+		// bean object created
 		Car e = new Car();
-		e.setId(2);
+		e.setId(1);
 		e.setName("Mercadize");
 		e.setPrice(5000000);
 		e.setModelYear("Jan-2011");
 		
-		// creating configuration class object
+		// creating Configuration class object
 		Configuration cfg = new Configuration();
 		cfg.configure("resources/hibernate.cfg.xml");
-		System.out.println("configuration class object created");
 		
-		// creating session factory object creation
+		// creating SessionFactory(I) object creation
 		SessionFactory sf = cfg.buildSessionFactory();
-		System.out.println("SessionFactory class object created");
 		
-		// session object creation
+		// creating Session(I) object creation
 		Session s = sf.openSession();
-		System.out.println("Session class object created");
 		
-		// object state is persistent
+		// save data to hibarnate container
 		s.save(e);
-		System.out.println("now object is in \"persistent\" object state");
-		
 
-		// object state is permanent
+		// creating Transaction(I) object creation
 		Transaction t = s.beginTransaction();
-		t.commit();
-		System.out.println("permanent object state");
 		
-		// object state is deteched
+		// sending data to database
+		t.commit();
+		
+		// removing data from session
 		s.evict(e);
-		System.out.println("deteched object state");
 		
 		System.out.println("All operation done");
 	}
